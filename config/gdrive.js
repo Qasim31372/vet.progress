@@ -7,6 +7,15 @@ if (!fs.existsSync(UPLOADS_DIR)) {
   fs.mkdirSync(UPLOADS_DIR, { recursive: true });
 }
 
+// Fallback Apps Script URL if process.env.GOOGLE_SCRIPT_WEB_APP_URL is omitted on Render/Heroku
+const DEFAULT_DRIVE_URL = 'https://script.google.com/macros/s/AKfycbyVSsdRfCzE7RbFypeqbDR5YiEnrjjXdYYSgtWZk6KWCJpsAwbh8dKTpyWrOVYMaaUkOA/exec';
+
+function getScriptUrl() {
+  return (process.env.GOOGLE_SCRIPT_WEB_APP_URL && process.env.GOOGLE_SCRIPT_WEB_APP_URL.trim().startsWith('http'))
+    ? process.env.GOOGLE_SCRIPT_WEB_APP_URL.trim()
+    : DEFAULT_DRIVE_URL;
+}
+
 /**
  * Upload file to Google Drive using Google Apps Script Web App
  */
@@ -76,8 +85,7 @@ async function uploadViaGoogleAppsScript(file, scriptUrl) {
  * Upload & Sync Database JSON Payload (Doctors, Admins, Cases) to Google Drive
  */
 async function syncDatabaseToDrive(data) {
-  const scriptUrl = process.env.GOOGLE_SCRIPT_WEB_APP_URL;
-  if (!scriptUrl || !scriptUrl.startsWith('http')) return;
+  const scriptUrl = getScriptUrl();
 
   try {
     const jsonString = JSON.stringify(data, null, 2);
@@ -121,8 +129,7 @@ async function syncDatabaseToDrive(data) {
  * Retrieve & Restore Database JSON Payload from Google Drive
  */
 async function fetchDatabaseFromDrive() {
-  const scriptUrl = process.env.GOOGLE_SCRIPT_WEB_APP_URL;
-  if (!scriptUrl || !scriptUrl.startsWith('http')) return null;
+  const scriptUrl = getScriptUrl();
 
   try {
     console.log('[Google Drive Sync] Fetching database backup from Google Drive...');
@@ -253,10 +260,10 @@ async function uploadViaOAuth2(file) {
  * Main Upload Router - Tries Direct Google Drive Methods
  */
 async function uploadFile(file) {
-  const scriptUrl = process.env.GOOGLE_SCRIPT_WEB_APP_URL;
+  const scriptUrl = getScriptUrl();
   if (scriptUrl && scriptUrl.startsWith('http')) {
     try {
-      console.log(`[Google Drive] Uploading ${file.originalname} via Google Apps Script Web App...`);
+      console.log(`[Google Drive] Uploading ${file.originalname} via Google Apps Script Web App (${scriptUrl})...`);
       return await uploadViaGoogleAppsScript(file, scriptUrl);
     } catch (err) {
       console.error('[Google Apps Script Drive Upload Error]:', err.message);
