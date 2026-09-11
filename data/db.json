@@ -3,53 +3,13 @@
     {
       "id": "admin_1789099889983",
       "name": "System Administrator",
-      "email": "admin@vetportal.com",
+      "email": "mq8840@gmail.com",
       "password": "$2a$10$xu73SXXe.fF4Bua9l4tnnee.lizKjE1dVWKh9wXWnkr8K1NHI29Lm",
       "role": "admin",
       "specialization": "Chief Veterinary Administrator",
       "clinicName": "Central Vet HQ",
       "createdAt": "2026-09-11T04:11:29.983Z"
-    },
-    {
-      "id": "doc_1789102932345",
-      "name": "kjhkjh,m",
-      "email": "wjfdka@gail.com",
-      "password": "$2a$10$KZ8CTU9NdOabrl5XYYW4U.MSwCg1sw4KKokdof4y3Q7.LH2gnLSui",
-      "role": "doctor",
-      "phone": "",
-      "clinicName": "adewqd",
-      "specialization": "dvm",
-      "createdAt": "2026-09-11T05:02:12.345Z"
-    }
-  ],
-  "treatments": [
-    {
-      "id": "treat_1789103060884_6gh1",
-      "doctorId": "doc_1789102932345",
-      "doctorName": "kjhkjh,m",
-      "doctorClinic": "adewqd",
-      "doctorSpecialization": "dvm",
-      "caseTitle": "fwed",
-      "animalSpecies": "wefewf",
-      "category": "Livestock - Cattle/Buffalo",
-      "symptoms": "wqedqd",
-      "diagnosis": "wdad",
-      "medication": "adsada",
-      "outcomeStatus": "deceased",
-      "images": [
-        {
-          "url": "https://lh3.googleusercontent.com/d/1tzoL0w2178KifDfr2LFUucacK3uC_DT5",
-          "driveFileId": "1tzoL0w2178KifDfr2LFUucacK3uC_DT5",
-          "isDrive": true,
-          "originalName": "Annotation 2026-09-06 054733.png"
-        }
-      ],
-      "approvalStatus": "approved",
-      "rejectionReason": null,
-      "createdAt": "2026-09-11T05:04:20.884Z",
-      "updatedAt": "2026-09-11T05:06:13.986Z",
-      "approvedAt": "2026-09-11T05:06:13.983Z",
-      "approvedBy": "System Administrator"
     }
   ]
+  
 }
