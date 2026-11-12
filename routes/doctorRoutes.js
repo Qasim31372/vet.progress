@@ -63,7 +63,7 @@ router.post('/treatments', upload.array('images', 5), async (req, res) => {
     db.addTreatment(newTreatment);
 
     res.status(201).json({
-      message: 'Treatment case submitted successfully and is pending admin approval.',
+      message: 'Treatment case submitted successfully and is pending teacher review.',
       treatment: newTreatment
     });
   } catch (err) {

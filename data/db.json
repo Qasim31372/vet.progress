@@ -1,12 +1,22 @@
 {
   "users": [
     {
+      "id": "teacher_demo_101",
+      "name": "Prof. Dr. Veterinary Teacher",
+      "email": "teacher@vetlearnhub.com",
+      "password": "$2a$10$xu73SXXe.fF4Bua9l4tnnee.lizKjE1dVWKh9wXWnkr8K1NHI29Lm",
+      "role": "teacher",
+      "department": "Clinical Veterinary Medicine & Surgery",
+      "university": "Faculty of Veterinary Sciences",
+      "createdAt": "2026-11-12T00:00:00.000Z"
+    },
+    {
       "id": "admin_1789099889983",
-      "name": "System Administrator",
+      "name": "Faculty Teacher / Administrator",
       "email": "mq8840@gmail.com",
       "password": "$2a$10$xu73SXXe.fF4Bua9l4tnnee.lizKjE1dVWKh9wXWnkr8K1NHI29Lm",
-      "role": "admin",
-      "specialization": "Chief Veterinary Administrator",
+      "role": "teacher",
+      "specialization": "Chief Veterinary Faculty",
       "clinicName": "Central Vet HQ",
       "createdAt": "2026-09-11T04:11:29.983Z"
     },

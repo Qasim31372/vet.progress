@@ -64,34 +64,40 @@ function verifyStudent(req, res, next) {
   }
 }
 
-// Verify Admin Authentication
-function verifyAdmin(req, res, next) {
+// Verify Teacher / Faculty Authentication
+function verifyTeacher(req, res, next) {
   const token = getToken(req);
   if (!token) {
-    return res.status(401).json({ error: 'Access denied. Admin authentication token missing.' });
+    return res.status(401).json({ error: 'Access denied. Teacher authentication token missing.' });
   }
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
-    if (decoded.role !== 'admin') {
-      return res.status(403).json({ error: 'Access forbidden. Admin role required.' });
+    if (decoded.role !== 'teacher' && decoded.role !== 'admin') {
+      return res.status(403).json({ error: 'Access forbidden. Teacher / Faculty role required.' });
     }
 
     const user = db.findUserById(decoded.id);
-    if (!user || user.role !== 'admin') {
-      return res.status(401).json({ error: 'Invalid or inactive admin account.' });
+    if (!user || (user.role !== 'teacher' && user.role !== 'admin')) {
+      return res.status(401).json({ error: 'Invalid or inactive teacher account.' });
     }
 
     req.user = user;
     next();
   } catch (err) {
-    return res.status(401).json({ error: 'Invalid or expired admin authentication token.' });
+    return res.status(401).json({ error: 'Invalid or expired teacher authentication token.' });
   }
+}
+
+// Verify Admin Authentication (Compatibility alias)
+function verifyAdmin(req, res, next) {
+  return verifyTeacher(req, res, next);
 }
 
 module.exports = {
   verifyDoctor,
   verifyStudent,
+  verifyTeacher,
   verifyAdmin,
   JWT_SECRET
 };

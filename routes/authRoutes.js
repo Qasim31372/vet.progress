@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const db = require('../db/database');
-const { verifyDoctor, verifyStudent, verifyAdmin, JWT_SECRET } = require('../middleware/auth');
+const { verifyDoctor, verifyStudent, verifyTeacher, verifyAdmin, JWT_SECRET } = require('../middleware/auth');
 
 // Doctor Signup
 router.post('/doctor/signup', (req, res) => {
@@ -196,29 +196,124 @@ router.get('/student/me', verifyStudent, (req, res) => {
   res.json({ user: userWithoutPassword });
 });
 
-// Admin Login (Strictly isolated from Doctor login)
+// Teacher Signup
+router.post('/teacher/signup', (req, res) => {
+  try {
+    const { name, email, password, department, university } = req.body;
+
+    if (!name || !email || !password) {
+      return res.status(400).json({ error: 'Name, email, and password are required.' });
+    }
+
+    const existingUser = db.findUserByEmail(email);
+    if (existingUser) {
+      return res.status(400).json({ error: 'An account with this email already exists.' });
+    }
+
+    const salt = bcrypt.genSaltSync(10);
+    const hashedPassword = bcrypt.hashSync(password, salt);
+
+    const newTeacher = {
+      id: 'teacher_' + Date.now(),
+      name,
+      email,
+      password: hashedPassword,
+      role: 'teacher',
+      department: department || 'Department of Clinical Veterinary Medicine',
+      university: university || 'Faculty of Veterinary Sciences',
+      createdAt: new Date().toISOString()
+    };
+
+    db.addUser(newTeacher);
+
+    const token = jwt.sign({ id: newTeacher.id, role: 'teacher' }, JWT_SECRET, { expiresIn: '7d' });
+
+    res.status(201).json({
+      message: 'Teacher account registered successfully.',
+      token,
+      user: {
+        id: newTeacher.id,
+        name: newTeacher.name,
+        email: newTeacher.email,
+        role: newTeacher.role,
+        department: newTeacher.department,
+        university: newTeacher.university
+      }
+    });
+  } catch (err) {
+    console.error('Teacher signup error:', err);
+    res.status(500).json({ error: 'Internal server error during teacher registration.' });
+  }
+});
+
+// Teacher Login
+router.post('/teacher/login', (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({ error: 'Email and password are required.' });
+    }
+
+    const user = db.findUserByEmail(email);
+    if (!user || (user.role !== 'teacher' && user.role !== 'admin')) {
+      return res.status(401).json({ error: 'Invalid teacher credentials.' });
+    }
+
+    const isMatch = bcrypt.compareSync(password, user.password);
+    if (!isMatch) {
+      return res.status(401).json({ error: 'Invalid teacher credentials.' });
+    }
+
+    const token = jwt.sign({ id: user.id, role: user.role }, JWT_SECRET, { expiresIn: '7d' });
+
+    res.json({
+      message: 'Teacher login successful.',
+      token,
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        department: user.department,
+        university: user.university
+      }
+    });
+  } catch (err) {
+    console.error('Teacher login error:', err);
+    res.status(500).json({ error: 'Internal server error during teacher login.' });
+  }
+});
+
+// Teacher Profile Me
+router.get('/teacher/me', verifyTeacher, (req, res) => {
+  const { password, ...userWithoutPassword } = req.user;
+  res.json({ user: userWithoutPassword });
+});
+
+// Admin Login (Aliased to support teacher or admin)
 router.post('/admin/login', (req, res) => {
   try {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res.status(400).json({ error: 'Admin email and password are required.' });
+      return res.status(400).json({ error: 'Email and password are required.' });
     }
 
     const user = db.findUserByEmail(email);
-    if (!user || user.role !== 'admin') {
-      return res.status(401).json({ error: 'Invalid admin credentials.' });
+    if (!user || (user.role !== 'admin' && user.role !== 'teacher')) {
+      return res.status(401).json({ error: 'Invalid credentials.' });
     }
 
     const isMatch = bcrypt.compareSync(password, user.password);
     if (!isMatch) {
-      return res.status(401).json({ error: 'Invalid admin credentials.' });
+      return res.status(401).json({ error: 'Invalid credentials.' });
     }
 
-    const token = jwt.sign({ id: user.id, role: 'admin' }, JWT_SECRET, { expiresIn: '1d' });
+    const token = jwt.sign({ id: user.id, role: user.role }, JWT_SECRET, { expiresIn: '1d' });
 
     res.json({
-      message: 'Admin authentication successful.',
+      message: 'Authentication successful.',
       token,
       user: {
         id: user.id,
@@ -229,12 +324,12 @@ router.post('/admin/login', (req, res) => {
     });
   } catch (err) {
     console.error('Admin login error:', err);
-    res.status(500).json({ error: 'Internal server error during admin authentication.' });
+    res.status(500).json({ error: 'Internal server error during authentication.' });
   }
 });
 
 // Admin Profile Me
-router.get('/admin/me', verifyAdmin, (req, res) => {
+router.get('/admin/me', verifyTeacher, (req, res) => {
   const { password, ...userWithoutPassword } = req.user;
   res.json({ user: userWithoutPassword });
 });

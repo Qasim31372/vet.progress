@@ -1,7 +1,7 @@
 {
   "name": "vet-learn-hub",
   "version": "1.0.0",
-  "description": "Vet Learn Hub - Veterinary Medical Learning & Clinical Case Registry Portal with Google Drive Storage and Isolated Student, Doctor, and Admin Panels",
+  "description": "Vet Learn Hub - Veterinary Medical Learning & Clinical Case Registry Portal with Google Drive Storage and Isolated Student, Doctor, and Teacher Panels",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
