@@ -29,6 +29,16 @@
       "university": "UVAS (University of Veterinary and Animal Sciences)",
       "semester": "DVM Final Year",
       "createdAt": "2026-11-12T00:00:00.000Z"
+    },
+    {
+      "id": "admin_1794458039034",
+      "name": "System Administrator",
+      "email": "admin@vetportal.com",
+      "password": "$2a$10$AiGWVAgdptw7GFlETssPjeg/eMJba6c2vxu5FMFtgw8VxtvHXcSUK",
+      "role": "admin",
+      "specialization": "Chief Veterinary Administrator",
+      "clinicName": "Central Vet HQ",
+      "createdAt": "2026-11-12T04:33:59.034Z"
     }
   ],
   "treatments": []

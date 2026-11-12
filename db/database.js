@@ -48,28 +48,28 @@ function writeData(data) {
 
 function initSeed() {
   const db = readData();
-  const adminEmail = process.env.ADMIN_EMAIL || 'admin@vetportal.com';
-  const adminPassword = process.env.ADMIN_PASSWORD || 'admin123';
+  const teacherEmail = process.env.TEACHER_EMAIL || 'teacher@vetlearnhub.com';
+  const teacherPassword = process.env.TEACHER_PASSWORD || 'teacher123';
 
-  const existingAdmin = db.users.find(u => u.role === 'admin');
-  if (!existingAdmin) {
+  const existingFaculty = db.users.find(u => u.role === 'teacher' || u.role === 'admin');
+  if (!existingFaculty) {
     const salt = bcrypt.genSaltSync(10);
-    const hashedPassword = bcrypt.hashSync(adminPassword, salt);
+    const hashedPassword = bcrypt.hashSync(teacherPassword, salt);
 
-    const adminUser = {
-      id: 'admin_' + Date.now(),
-      name: 'System Administrator',
-      email: adminEmail,
+    const teacherUser = {
+      id: 'teacher_' + Date.now(),
+      name: 'Faculty Teacher',
+      email: teacherEmail,
       password: hashedPassword,
-      role: 'admin',
-      specialization: 'Chief Veterinary Administrator',
-      clinicName: 'Central Vet HQ',
+      role: 'teacher',
+      specialization: 'Veterinary Clinical Professor & Head of Department',
+      clinicName: 'Faculty of Veterinary Sciences',
       createdAt: new Date().toISOString()
     };
 
-    db.users.push(adminUser);
+    db.users.push(teacherUser);
     writeData(db);
-    console.log(`[DB] Seeded initial admin account: ${adminEmail} / ${adminPassword}`);
+    console.log(`[DB] Seeded initial teacher account: ${teacherEmail} / ${teacherPassword}`);
   }
 }
 
