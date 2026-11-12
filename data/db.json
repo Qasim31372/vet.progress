@@ -1,0 +1,25 @@
+{
+  "users": [
+    {
+      "id": "admin_1789099889983",
+      "name": "System Administrator",
+      "email": "mq8840@gmail.com",
+      "password": "$2a$10$xu73SXXe.fF4Bua9l4tnnee.lizKjE1dVWKh9wXWnkr8K1NHI29Lm",
+      "role": "admin",
+      "specialization": "Chief Veterinary Administrator",
+      "clinicName": "Central Vet HQ",
+      "createdAt": "2026-09-11T04:11:29.983Z"
+    },
+    {
+      "id": "stu_demo_101",
+      "name": "Veterinary Student",
+      "email": "student@vetlearnhub.com",
+      "password": "$2a$10$xu73SXXe.fF4Bua9l4tnnee.lizKjE1dVWKh9wXWnkr8K1NHI29Lm",
+      "role": "student",
+      "university": "UVAS (University of Veterinary and Animal Sciences)",
+      "semester": "DVM Final Year",
+      "createdAt": "2026-11-12T00:00:00.000Z"
+    }
+  ],
+  "treatments": []
+}

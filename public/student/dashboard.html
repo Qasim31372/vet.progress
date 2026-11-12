@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Learning Dashboard | Vet Learn Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col antialiased">
+
+  <!-- Student Header -->
+  <header class="bg-slate-900 text-white border-b border-slate-800 sticky top-0 z-30 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <div class="flex items-center gap-3">
+        <div class="w-11 h-11 rounded-xl bg-teal-600 flex items-center justify-center text-white font-bold shadow-md shadow-teal-900/40">
+          <i class="fa-solid fa-graduation-cap text-xl"></i>
+        </div>
+        <div>
+          <h1 class="text-base font-bold text-white flex items-center gap-2">
+            <span id="studentHeaderName">Vet Learn Hub - Student Panel</span>
+            <span class="text-[10px] bg-teal-500/20 text-teal-300 border border-teal-500/40 px-2 py-0.5 rounded-full font-bold">STUDENT</span>
+          </h1>
+          <p id="studentHeaderInstitute" class="text-xs text-slate-400">Loading student details...</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="/" class="px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 transition-all flex items-center gap-1.5">
+          <i class="fa-solid fa-book-open text-teal-400"></i> Main Student Hub
+        </a>
+        <button id="studentLogoutBtn" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-rose-600/20 text-rose-300 border border-rose-500/30 hover:bg-rose-600 hover:text-white transition-all flex items-center gap-1.5">
+          <i class="fa-solid fa-right-from-bracket"></i> Logout
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full space-y-8">
+    
+    <!-- Welcome Banner -->
+    <div class="bg-gradient-to-r from-teal-900 via-slate-900 to-indigo-950 rounded-2xl p-6 sm:p-8 text-white shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6 border border-teal-800/40">
+      <div>
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-500/20 text-teal-300 border border-teal-500/40 text-xs font-bold uppercase tracking-wider mb-2">
+          <i class="fa-solid fa-sparkles"></i> Veterinary Clinical Learning Hub
+        </span>
+        <h2 class="text-2xl font-extrabold flex items-center gap-2">
+          Welcome, <span id="welcomeStudentName" class="text-teal-300">Doctor in Training</span>!
+        </h2>
+        <p class="text-xs sm:text-sm text-slate-300 mt-2 max-w-2xl leading-relaxed">
+          Study real-world clinical cases submitted by verified veterinarians. Review diagnostic findings, medication regimens, and patient outcomes to prepare for clinical rotations and licensing exams.
+        </p>
+      </div>
+
+      <div class="flex items-center gap-3 shrink-0">
+        <button id="tabCasesBtnHero" class="px-5 py-3 bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold text-xs rounded-xl shadow-lg transition-all flex items-center gap-2">
+          <i class="fa-solid fa-magnifying-glass"></i> Explore Case Studies
+        </button>
+      </div>
+    </div>
+
+    <!-- Quick Stats Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm flex items-center justify-between">
+        <div>
+          <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Available Case Studies</p>
+          <h3 id="statTotalCases" class="text-3xl font-extrabold text-teal-600 mt-1">0</h3>
+        </div>
+        <div class="w-12 h-12 rounded-2xl bg-teal-50 text-teal-600 flex items-center justify-center text-xl">
+          <i class="fa-solid fa-book-medical"></i>
+        </div>
+      </div>
+
+      <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm flex items-center justify-between">
+        <div>
+          <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">My Bookmarked Cases</p>
+          <h3 id="statBookmarked" class="text-3xl font-extrabold text-amber-500 mt-1">0</h3>
+        </div>
+        <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-500 flex items-center justify-center text-xl">
+          <i class="fa-solid fa-bookmark"></i>
+        </div>
+      </div>
+
+      <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm flex items-center justify-between">
+        <div>
+          <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Animal Categories</p>
+          <h3 id="statCategoriesCount" class="text-3xl font-extrabold text-indigo-600 mt-1">0</h3>
+        </div>
+        <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-xl">
+          <i class="fa-solid fa-shield-cat"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="bg-white border border-slate-200 rounded-2xl p-2 flex flex-wrap gap-2 shadow-sm">
+      <button id="tabAllCases" class="px-5 py-3 rounded-xl text-xs font-bold transition-all bg-teal-600 text-white shadow-sm flex items-center gap-2">
+        <i class="fa-solid fa-book-open"></i> Clinical Case Studies
+      </button>
+
+      <button id="tabSavedCases" class="px-5 py-3 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900 flex items-center gap-2">
+        <i class="fa-solid fa-bookmark text-amber-500"></i> My Saved Cases
+        <span id="savedCasesBadge" class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full text-[10px] font-extrabold">0</span>
+      </button>
+
+      <button id="tabPharmacology" class="px-5 py-3 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900 flex items-center gap-2">
+        <i class="fa-solid fa-pills text-teal-600"></i> Drug & Medication Formulary
+      </button>
+    </div>
+
+    <!-- TAB 1: ALL CASES -->
+    <section id="allCasesSection" class="space-y-6">
+      
+      <!-- Filters -->
+      <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm flex flex-col md:flex-row gap-4 items-stretch md:items-center justify-between">
+        <div class="relative flex-1">
+          <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+          <input type="text" id="studentSearchInput" placeholder="Search by disease, species, medication, doctor..."
+            class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500">
+        </div>
+
+        <div class="w-full md:w-60">
+          <select id="studentCategoryFilter" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500">
+            <option value="all">🐾 All Species Categories</option>
+            <option value="Livestock - Cattle/Buffalo">🐄 Cattle / Buffalo</option>
+            <option value="Livestock - Sheep/Goat">🐐 Sheep / Goat</option>
+            <option value="Equine">🐎 Equine</option>
+            <option value="Pets - Dogs/Cats">🐕 Pets (Dogs & Cats)</option>
+            <option value="Poultry & Birds">🐓 Poultry & Birds</option>
+            <option value="Exotic & Wildlife">🦜 Exotic & Wildlife</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Cases Grid -->
+      <div id="casesLoading" class="text-center py-12 hidden">
+        <i class="fa-solid fa-circle-notch fa-spin text-3xl text-teal-600"></i>
+        <p class="text-xs text-slate-400 mt-2">Loading clinical case studies for study...</p>
+      </div>
+
+      <div id="casesEmpty" class="text-center py-16 bg-white border border-dashed border-slate-300 rounded-2xl hidden">
+        <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto text-slate-400 text-2xl mb-3">
+          <i class="fa-solid fa-folder-open"></i>
+        </div>
+        <h3 class="text-base font-bold text-slate-700">No Cases Found</h3>
+        <p class="text-xs text-slate-500 mt-1">Try refining your search terms or selecting another category.</p>
+      </div>
+
+      <div id="studentCasesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Dynamic Case Cards -->
+      </div>
+    </section>
+
+    <!-- TAB 2: MY BOOKMARKED CASES -->
+    <section id="savedCasesSection" class="space-y-6 hidden">
+      <div id="savedEmpty" class="text-center py-16 bg-white border border-dashed border-slate-300 rounded-2xl">
+        <div class="w-16 h-16 bg-amber-50 rounded-full flex items-center justify-center mx-auto text-amber-500 text-2xl mb-3">
+          <i class="fa-solid fa-bookmark"></i>
+        </div>
+        <h3 class="text-base font-bold text-slate-700">No Bookmarked Cases Yet</h3>
+        <p class="text-xs text-slate-500 mt-1">Bookmark any clinical case from the directory to review before rounds or exams.</p>
+      </div>
+
+      <div id="savedCasesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 hidden">
+        <!-- Dynamic Bookmarked Cards -->
+      </div>
+    </section>
+
+    <!-- TAB 3: CLINICAL PHARMACOLOGY -->
+    <section id="pharmacologySection" class="space-y-6 hidden">
+      <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-4">
+        <div>
+          <h3 class="text-lg font-extrabold text-slate-900 flex items-center gap-2">
+            <i class="fa-solid fa-pills text-teal-600"></i> Clinical Medication & Drug Formulary
+          </h3>
+          <p class="text-xs text-slate-500">
+            Real-world prescription protocols, active compounds, and dosages applied across verified cases.
+          </p>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-sm">
+            <thead class="bg-slate-50 text-slate-500 text-xs uppercase border-b border-slate-200">
+              <tr>
+                <th class="px-4 py-3">Species</th>
+                <th class="px-4 py-3">Diagnosis</th>
+                <th class="px-4 py-3">Prescribed Medication & Dosage</th>
+                <th class="px-4 py-3">Outcome</th>
+                <th class="px-4 py-3 text-right">Action</th>
+              </tr>
+            </thead>
+            <tbody id="medicationTableBody" class="divide-y divide-slate-100">
+              <!-- Dynamic Medication Rows -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Detailed Student Case Inspector Modal -->
+  <div id="studentCaseModal" class="fixed inset-0 bg-slate-900/75 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl max-w-3xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-100 overflow-hidden animate-in fade-in duration-200">
+      
+      <!-- Modal Header -->
+      <div class="px-6 py-4 bg-slate-900 text-white flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <span id="modalCategoryBadge" class="px-2.5 py-1 rounded-lg text-xs font-bold bg-teal-500/20 text-teal-300 border border-teal-500/30">Category</span>
+          <span id="modalOutcomeBadge" class="px-2.5 py-1 rounded-lg text-xs font-bold badge-recovered">Status</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="modalBookmarkBtn" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-800 hover:bg-amber-600/30 hover:text-amber-300 text-slate-300 transition-all flex items-center gap-1.5">
+            <i class="fa-regular fa-bookmark"></i> Bookmark
+          </button>
+          <button id="closeModalBtn" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition-all">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="p-6 overflow-y-auto space-y-6 flex-grow">
+        
+        <div>
+          <span class="text-[11px] font-bold text-teal-600 uppercase tracking-wider flex items-center gap-1">
+            <i class="fa-solid fa-graduation-cap"></i> Clinical Learning Record
+          </span>
+          <h2 id="modalTitle" class="text-xl sm:text-2xl font-extrabold text-slate-900 leading-snug mt-1">Case Study Title</h2>
+          <p class="text-xs text-slate-500 mt-1 flex items-center gap-2">
+            <i class="fa-solid fa-calendar"></i> Published: <span id="modalDate">Date</span> | 
+            <i class="fa-solid fa-paw"></i> Species: <span id="modalSpecies" class="font-bold text-slate-700">Species</span>
+          </p>
+        </div>
+
+        <!-- Google Drive Images / Media Gallery -->
+        <div id="modalImagesContainer" class="space-y-2">
+          <p class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+            <i class="fa-brands fa-google-drive text-emerald-600"></i> Clinical Photos & Media (Google Drive Sync)
+          </p>
+          <div id="modalImagesGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            <!-- Dynamic Images -->
+          </div>
+        </div>
+
+        <!-- Doctor Details Card -->
+        <div class="bg-teal-50 border border-teal-100 rounded-2xl p-4 flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-teal-600 text-white flex items-center justify-center font-bold text-lg">
+              <i class="fa-solid fa-user-doctor"></i>
+            </div>
+            <div>
+              <p id="modalDoctorName" class="font-bold text-slate-900 text-sm">Dr. Name</p>
+              <p id="modalDoctorClinic" class="text-xs text-slate-600">Clinic Name</p>
+            </div>
+          </div>
+          <span class="text-[11px] font-semibold text-teal-700 bg-teal-100/60 px-2.5 py-1 rounded-full">Treating Clinician</span>
+        </div>
+
+        <!-- Clinical Details -->
+        <div class="grid grid-cols-1 gap-4">
+          <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4">
+            <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1 flex items-center gap-1.5">
+              <i class="fa-solid fa-notes-medical text-amber-500"></i> Clinical Presentation & Symptoms:
+            </h4>
+            <p id="modalSymptoms" class="text-sm text-slate-700 leading-relaxed font-medium">Symptoms description...</p>
+          </div>
+
+          <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4">
+            <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1 flex items-center gap-1.5">
+              <i class="fa-solid fa-stethoscope text-sky-500"></i> Diagnosis & Clinical Findings:
+            </h4>
+            <p id="modalDiagnosis" class="text-sm text-slate-900 font-semibold leading-relaxed">Diagnosis details...</p>
+          </div>
+
+          <div class="bg-emerald-50/60 border border-emerald-200/70 rounded-2xl p-4">
+            <h4 class="text-xs font-bold text-emerald-800 uppercase tracking-wider mb-1 flex items-center gap-1.5">
+              <i class="fa-solid fa-pills text-emerald-600"></i> Prescribed Medication & Treatment Protocol:
+            </h4>
+            <p id="modalMedication" class="text-sm text-slate-800 leading-relaxed font-medium">Medication details...</p>
+          </div>
+
+          <!-- Student Clinical Pearl / Key Learning Point -->
+          <div class="bg-indigo-50/60 border border-indigo-200/70 rounded-2xl p-4">
+            <h4 class="text-xs font-bold text-indigo-800 uppercase tracking-wider mb-1 flex items-center gap-1.5">
+              <i class="fa-solid fa-lightbulb text-indigo-600"></i> Student Clinical Pearl:
+            </h4>
+            <p class="text-xs text-slate-700 leading-relaxed">
+              Always correlate the species-specific clinical signs with the prescribed dosage to prevent drug toxicity in small vs large animals. Review full pharmacology profile before administering in veterinary clinical rounds.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="px-6 py-4 bg-slate-50 border-t border-slate-200 flex justify-end">
+        <button id="closeModalBtn2" class="px-5 py-2.5 bg-slate-900 text-white text-sm font-bold rounded-xl hover:bg-slate-800 transition-all">
+          Close Inspector
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-slate-900 text-slate-400 py-8 border-t border-slate-800 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
+      <div class="flex items-center justify-center gap-2 text-white font-bold text-sm">
+        <i class="fa-solid fa-graduation-cap text-teal-400"></i> Vet Learn Hub - Student Learning Panel
+      </div>
+      <p class="text-xs text-slate-500">
+        Clinical case registry with Google Drive cloud sync for Veterinary Students & Practitioners.
+      </p>
+    </div>
+  </footer>
+
+  <script src="/js/student.js"></script>
+</body>
+</html>

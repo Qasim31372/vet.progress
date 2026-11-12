@@ -1,0 +1,15 @@
+# Dependencies
+node_modules/
+
+# Environment configuration with sensitive keys
+.env
+
+# Temporary and upload files
+temp_uploads/
+uploads/*
+!uploads/.gitkeep
+
+# System & IDE files
+.DS_Store
+Thumbs.db
+*.log
