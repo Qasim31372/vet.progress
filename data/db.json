@@ -2,44 +2,90 @@
   "users": [
     {
       "id": "teacher_demo_101",
-      "name": "Prof. Dr. Veterinary Teacher",
+      "name": "Prof. Dr. Tariq Mahmood",
       "email": "teacher@vetlearnhub.com",
       "password": "$2a$10$xu73SXXe.fF4Bua9l4tnnee.lizKjE1dVWKh9wXWnkr8K1NHI29Lm",
       "role": "teacher",
-      "department": "Clinical Veterinary Medicine & Surgery",
+      "department": "Department of Clinical Veterinary Medicine",
       "university": "Faculty of Veterinary Sciences",
       "createdAt": "2026-11-12T00:00:00.000Z"
     },
     {
-      "id": "admin_1789099889983",
-      "name": "Faculty Teacher / Administrator",
-      "email": "mq8840@gmail.com",
-      "password": "$2a$10$xu73SXXe.fF4Bua9l4tnnee.lizKjE1dVWKh9wXWnkr8K1NHI29Lm",
-      "role": "teacher",
-      "specialization": "Chief Veterinary Faculty",
-      "clinicName": "Central Vet HQ",
-      "createdAt": "2026-09-11T04:11:29.983Z"
-    },
-    {
       "id": "stu_demo_101",
-      "name": "Veterinary Student",
+      "name": "Fatima Ali",
       "email": "student@vetlearnhub.com",
       "password": "$2a$10$xu73SXXe.fF4Bua9l4tnnee.lizKjE1dVWKh9wXWnkr8K1NHI29Lm",
       "role": "student",
-      "university": "UVAS (University of Veterinary and Animal Sciences)",
-      "semester": "DVM Final Year",
+      "university": "University of Veterinary & Animal Sciences",
+      "semester": "DVM Final Year (Clinical Rotations)",
       "createdAt": "2026-11-12T00:00:00.000Z"
     },
     {
-      "id": "admin_1794458039034",
-      "name": "System Administrator",
-      "email": "admin@vetportal.com",
-      "password": "$2a$10$AiGWVAgdptw7GFlETssPjeg/eMJba6c2vxu5FMFtgw8VxtvHXcSUK",
-      "role": "admin",
-      "specialization": "Chief Veterinary Administrator",
-      "clinicName": "Central Vet HQ",
-      "createdAt": "2026-11-12T04:33:59.034Z"
+      "id": "doc_demo_101",
+      "name": "Dr. Sarah Khan",
+      "email": "doctor@vetlearnhub.com",
+      "password": "$2a$10$xu73SXXe.fF4Bua9l4tnnee.lizKjE1dVWKh9wXWnkr8K1NHI29Lm",
+      "role": "doctor",
+      "phone": "+92 300 1234567",
+      "clinicName": "Metropolitan Animal Care Hospital",
+      "specialization": "Livestock & Companion Animal Surgeon",
+      "createdAt": "2026-11-12T00:00:00.000Z"
     }
   ],
-  "treatments": []
+  "treatments": [
+    {
+      "id": "treat_demo_101",
+      "doctorId": "doc_demo_101",
+      "doctorName": "Dr. Sarah Khan",
+      "doctorClinic": "Metropolitan Animal Care Hospital",
+      "doctorSpecialization": "Livestock & Companion Animal Surgeon",
+      "caseTitle": "Clinical Diagnosis & Recovery Protocol for Acute Bovine Mastitis in Holstein Friesian",
+      "animalSpecies": "Holstein Friesian Cow (4 Years Old)",
+      "category": "Livestock - Cattle/Buffalo",
+      "symptoms": "High pyrexia (104.5 F), anorexia, swollen hard left quarter of udder with pain on palpation, blood-tinged watery milk secretion with clots.",
+      "diagnosis": "Acute Clinical Mastitis caused by Coliform infection (E. coli). Confirmed via California Mastitis Test (CMT positive +++).",
+      "medication": "Intramammary Infusion (Cefquinome Sulfate 75mg q12h x 3 days) + Systemic Ceftiofur Sodium 2.2 mg/kg IM q24h x 5 days + Flunixin Meglumine 2.2 mg/kg IV for endotoxemia and anti-inflammatory relief + Oxytocin 20 IU for complete quarter stripping.",
+      "outcomeStatus": "recovered",
+      "images": [
+        {
+          "url": "https://images.unsplash.com/photo-1546445317-29f4545e9d53?auto=format&fit=crop&w=800&q=80",
+          "driveFileId": null,
+          "isDrive:false": false,
+          "originalName": "bovine_mastitis_case.jpg"
+        }
+      ],
+      "approvalStatus": "approved",
+      "rejectionReason": null,
+      "approvedBy": "Prof. Dr. Tariq Mahmood",
+      "createdAt": "2026-11-12T01:00:00.000Z",
+      "updatedAt": "2026-11-12T01:30:00.000Z"
+    },
+    {
+      "id": "treat_demo_102",
+      "doctorId": "doc_demo_101",
+      "doctorName": "Dr. Sarah Khan",
+      "doctorClinic": "Metropolitan Animal Care Hospital",
+      "doctorSpecialization": "Livestock & Companion Animal Surgeon",
+      "caseTitle": "Successful Therapeutic Management of Canine Parvoviral Enteritis in German Shepherd Puppy",
+      "animalSpecies": "German Shepherd (Puppy, 4 Months Old)",
+      "category": "Pets - Dogs/Cats",
+      "symptoms": "Severe hemorrhagic diarrhea with foul odor, persistent projectile vomiting, profound lethargy, subnormal temperature, and 9% dehydration.",
+      "diagnosis": "Canine Parvovirus (CPV-2) enteritis. Confirmed positive via rapid fecal CPV antigen chromatographic test strip.",
+      "medication": "Aggressive fluid therapy (Lactated Ringer's Solution + 5% Dextrose with 20 mEq/L KCl) + Maropitant (Cerenia) 1 mg/kg SC q24h + Ampicillin/Sulbactam 30 mg/kg IV q8h to prevent bacterial translocation + Metoclopramide CRI + Metronidazole IV.",
+      "outcomeStatus": "recovered",
+      "images": [
+        {
+          "url": "https://images.unsplash.com/photo-1589941013453-ec89f33b5455?auto=format&fit=crop&w=800&q=80",
+          "driveFileId": null,
+          "isDrive": false,
+          "originalName": "canine_parvo_case.jpg"
+        }
+      ],
+      "approvalStatus": "approved",
+      "rejectionReason": null,
+      "approvedBy": "Prof. Dr. Tariq Mahmood",
+      "createdAt": "2026-11-12T02:00:00.000Z",
+      "updatedAt": "2026-11-12T02:30:00.000Z"
+    }
+  ]
 }

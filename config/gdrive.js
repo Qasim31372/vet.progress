@@ -7,13 +7,11 @@ if (!fs.existsSync(UPLOADS_DIR)) {
   fs.mkdirSync(UPLOADS_DIR, { recursive: true });
 }
 
-// Fallback Apps Script URL if process.env.GOOGLE_SCRIPT_WEB_APP_URL is omitted on Render/Heroku
-const DEFAULT_DRIVE_URL = 'https://script.google.com/macros/s/AKfycbyVSsdRfCzE7RbFypeqbDR5YiEnrjjXdYYSgtWZk6KWCJpsAwbh8dKTpyWrOVYMaaUkOA/exec';
-
+// Optional Apps Script URL from environment variable
 function getScriptUrl() {
   return (process.env.GOOGLE_SCRIPT_WEB_APP_URL && process.env.GOOGLE_SCRIPT_WEB_APP_URL.trim().startsWith('http'))
     ? process.env.GOOGLE_SCRIPT_WEB_APP_URL.trim()
-    : DEFAULT_DRIVE_URL;
+    : null;
 }
 
 /**
@@ -86,6 +84,7 @@ async function uploadViaGoogleAppsScript(file, scriptUrl) {
  */
 async function syncDatabaseToDrive(data) {
   const scriptUrl = getScriptUrl();
+  if (!scriptUrl) return; // Skip remote sync if no Google Drive Script URL is configured
 
   try {
     const jsonString = JSON.stringify(data, null, 2);
@@ -130,6 +129,7 @@ async function syncDatabaseToDrive(data) {
  */
 async function fetchDatabaseFromDrive() {
   const scriptUrl = getScriptUrl();
+  if (!scriptUrl) return false;
 
   try {
     console.log('[Google Drive Sync] Fetching database backup from Google Drive...');
